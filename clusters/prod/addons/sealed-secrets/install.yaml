@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: placeholder-sealed-secrets
+  namespace: prod
+data:
+  note: "Sealed Secrets controller will be installed here via Helm later"
+

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: placeholder-alb-controller
+  namespace: prod
+data:
+  note: "AWS Load Balancer Controller will be installed here via Helm later"
+

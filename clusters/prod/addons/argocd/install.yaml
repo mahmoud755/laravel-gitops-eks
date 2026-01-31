@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: placeholder-argocd
+  namespace: prod
+data:
+  note: "ArgoCD will be installed here via Helm later"
+
