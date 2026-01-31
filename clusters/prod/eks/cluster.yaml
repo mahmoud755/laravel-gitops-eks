@@ -6,6 +6,9 @@ metadata:
   region: us-east-1
   version: "1.29"
 
+iam:
+  withOIDC: true
+
 managedNodeGroups:
   - name: ng-prod
     instanceType: t3.medium
@@ -13,6 +16,6 @@ managedNodeGroups:
     minSize: 2
     maxSize: 3
     volumeSize: 20
-    ssh:
-      allow: false
+    labels:
+      env: prod
 
