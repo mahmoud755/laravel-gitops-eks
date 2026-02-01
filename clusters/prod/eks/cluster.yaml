@@ -11,10 +11,10 @@ iam:
 
 managedNodeGroups:
   - name: ng-prod
-    instanceType: t3.medium
-    desiredCapacity: 2
-    minSize: 2
-    maxSize: 3
+    instanceType: t3.micro
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 1
     volumeSize: 20
     labels:
       env: prod
