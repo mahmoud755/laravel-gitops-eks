@@ -3,10 +3,3 @@ kind: Kustomization
 
 resources:
   - bootstrap/namespace.yaml
-
-  - addons/argocd/install.yaml
-  - addons/sealed-secrets/install.yaml
-  - addons/alb-controller/install.yaml
-
-  - apps/laravel/kustomization.yaml
-
