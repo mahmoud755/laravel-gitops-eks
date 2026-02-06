@@ -1,8 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 resources:
   - bootstrap/namespace.yaml
+
+  - addons/sealed-secrets
+  - addons/storageclass-gp3.yaml
+  - addons/alb-controller
+
   - secrets/db-secret.sealed.yaml
+
   - apps/mysql
   - apps/redis
+  - apps/laravel
 

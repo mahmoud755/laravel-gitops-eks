@@ -18,15 +18,13 @@ spec:
           image: laravel-app-image:v3
           command: ["sh", "-c"]
           args: ["php artisan queue:work --sleep=3 --tries=3 --timeout=90"]
+          
           envFrom:
-            - configMapRef:
-                name: laravel-config
-          env:
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: db-secret
-                  key: DB_PASSWORD
+          - configMapRef:
+              name: laravel-config
+          - secretRef:
+              name: db-secret
+
           resources:
             requests:
               cpu: "100m"

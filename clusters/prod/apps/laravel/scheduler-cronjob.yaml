@@ -15,15 +15,14 @@ spec:
               image: laravel-app-image:v3
               command: ["sh", "-c"]
               args: ["php artisan schedule:run"]
+              
               envFrom:
                 - configMapRef:
                     name: laravel-config
-              env:
-                - name: DB_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: db-secret
-                      key: DB_PASSWORD
+                - secretRef:
+                    name: db-secret
+
+
               resources:
                 requests:
                   cpu: "50m"

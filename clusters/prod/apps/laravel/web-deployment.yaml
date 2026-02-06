@@ -69,15 +69,13 @@ spec:
           volumeMounts:
             - name: app-code
               mountPath: /var/www
+          
           envFrom:
             - configMapRef:
                 name: laravel-config
-          env:
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: db-secret
-                  key: DB_PASSWORD
+            - secretRef:
+                name: db-secret
+
           readinessProbe:
             tcpSocket:
               port: 9000
