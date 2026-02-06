@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laravel-queue
+  namespace: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: laravel-queue
+  template:
+    metadata:
+      labels:
+        app: laravel-queue
+    spec:
+      containers:
+        - name: worker
+          image: laravel-app-image:v3
+          command: ["sh", "-c"]
+          args: ["php artisan queue:work --sleep=3 --tries=3 --timeout=90"]
+          envFrom:
+            - configMapRef:
+                name: laravel-config
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_PASSWORD
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
