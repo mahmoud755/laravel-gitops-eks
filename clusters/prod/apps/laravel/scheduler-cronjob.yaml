@@ -12,7 +12,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: scheduler
-              image: laravel-app-image:v3
+              image: 617287376010.dkr.ecr.us-east-1.amazonaws.com/laravel-app-image:v3
               command: ["sh", "-c"]
               args: ["php artisan schedule:run"]
               

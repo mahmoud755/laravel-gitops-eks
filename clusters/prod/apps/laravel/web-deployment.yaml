@@ -62,7 +62,7 @@ spec:
               memory: "256Mi"
 
         - name: php-fpm
-          image: laravel-app-image:v3
+          image: 617287376010.dkr.ecr.us-east-1.amazonaws.com/laravel-app-image:v3
           ports:
             - name: fpm
               containerPort: 9000
