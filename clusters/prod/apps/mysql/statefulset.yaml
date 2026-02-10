@@ -18,25 +18,15 @@ spec:
         - name: mysql
           image: mysql:8.0
           ports:
-            - containerPort: 3306
-              name: mysql
+            - name: mysql
+              containerPort: 3306
+          envFrom:
+            - secretRef:
+                name: db-secret
           env:
-            - name: MYSQL_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: db-secret
-                  key: DB_DATABASE
-            - name: MYSQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: db-secret
-                  key: DB_USERNAME
+            # مهم: Laravel غالبًا بيستخدم DB_* ، و MySQL image بيستخدم MYSQL_*
+            # اتأكد إن db-secret فيه مفاتيح MYSQL_ROOT_PASSWORD/MYSQL_DATABASE/MYSQL_USER/MYSQL_PASSWORD
             - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: db-secret
-                  key: DB_PASSWORD
-            - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: db-secret
@@ -44,8 +34,31 @@ spec:
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
-      volumes:
-        - name: mysql-data
-          persistentVolumeClaim:
-            claimName: mysql-pvc
+          readinessProbe:
+            exec:
+              command: ["sh", "-c", "mysqladmin ping -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWORD"]
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command: ["sh", "-c", "mysqladmin ping -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWORD"]
+            initialDelaySeconds: 60
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: gp3
+        resources:
+          requests:
+            storage: 10Gi
 
