@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - bootstrap/namespace.yaml
 
-    #  - addons/sealed-secrets
+  - addons/sealed-secrets
   - addons/storageclass-gp3.yaml
   - addons/alb-controller
 
