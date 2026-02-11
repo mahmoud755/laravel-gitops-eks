@@ -8,8 +8,8 @@ resources:
   - addons/storageclass-gp3.yaml
   - addons/alb-controller
 
-  - secrets/db-secret.sealed.yaml
-
+    # - secrets/db-secret.sealed.yaml
+  - secrets/db-secret.yaml
   - apps/mysql
   - apps/redis
   - apps/laravel
