@@ -13,20 +13,20 @@ spec:
       labels:
         app: laravel-web
     spec:
-      initContainers:
-        - name: init-copy-app
-          image: 617287376010.dkr.ecr.us-east-1.amazonaws.com/laravel-app-image:v3
-          command: ["sh", "-c"]
-          args:
-            - |
-              set -e
-              cp -a /var/www/. /app
+      #initContainers:
+      # - name: init-copy-app
+      #   image: 617287376010.dkr.ecr.us-east-1.amazonaws.com/laravel-app-image:v3
+      #   command: ["sh", "-c"]
+      #   args:
+      #     - |
+      #       set -e
+      #       cp -a /var/www/. /app
               # Ensure Laravel writable dirs are writable by php-fpm user (www-data)
-              chown -R www-data:www-data /app/storage /app/bootstrap/cache
-              chmod -R 775 /app/storage /app/bootstrap/cache
-          volumeMounts:
-            - name: app-code
-              mountPath: /app
+              #       chown -R www-data:www-data /app/storage /app/bootstrap/cache
+              #chmod -R 775 /app/storage /app/bootstrap/cache
+              #    volumeMounts:
+              #- name: app-code
+              #mountPath: /app
 
       containers:
         - name: nginx
@@ -38,9 +38,9 @@ spec:
             - name: nginx-config
               mountPath: /etc/nginx/conf.d/default.conf
               subPath: default.conf
-            - name: app-code
-              mountPath: /var/www
-              readOnly: true
+                #- name: app-code
+                #mountPath: /var/www
+                #readOnly: true
           readinessProbe:
             httpGet:
               path: /
@@ -66,9 +66,9 @@ spec:
           ports:
             - name: fpm
               containerPort: 9000
-          volumeMounts:
-            - name: app-code
-              mountPath: /var/www
+                #volumeMounts:
+                #- name: app-code
+                #mountPath: /var/www
           
           envFrom:
             - configMapRef:
@@ -98,6 +98,6 @@ spec:
         - name: nginx-config
           configMap:
             name: laravel-nginx
-        - name: app-code
-          emptyDir: {}
+              #- name: app-code
+              #emptyDir: {}
 
