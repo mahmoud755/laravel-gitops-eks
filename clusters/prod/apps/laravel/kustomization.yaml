@@ -6,5 +6,5 @@ resources:
   - web-deployment.yaml
   - web-service.yaml
   - queue-deployment.yaml
-  - scheduler-cronjob.yaml
+    #  - scheduler-cronjob.yaml
 
